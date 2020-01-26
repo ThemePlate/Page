@@ -46,7 +46,7 @@ class Page {
 
 	public function init() {
 
-		$option = ThemePlate()->key . '-' . $this->config['id'];
+		$option = $this->config['id'];
 
 		register_setting( $option, $option, array( $this, 'save' ) );
 
@@ -57,19 +57,10 @@ class Page {
 
 		$page = $this->config;
 
-		$page['id'] = ThemePlate()->key . '-' . $page['id'];
-
 		if ( empty( $page['parent'] ) ) {
 			$this->add_menu( $page );
 		} else {
-			global $_parent_pages;
-
-			$parent_slug = ThemePlate()->key . '-' . $page['parent'];
-
-			if ( array_key_exists( $parent_slug, $_parent_pages ) ) {
-				$page['parent'] = $parent_slug;
-			} elseif ( $parent_slug === $page['id'] ) {
-				$page['parent'] = $parent_slug;
+			if ( $page['parent'] === $page['id'] ) {
 				$this->add_menu( $page );
 				$page['menu'] = $page['title'];
 			}
@@ -128,7 +119,7 @@ class Page {
 			return;
 		}
 
-		$page = ThemePlate()->key . '-' . $this->config['id'];
+		$page = $this->config['id'];
 
 		if ( $_REQUEST['page'] === $page && 'true' === $_REQUEST['settings-updated'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 			echo '<div id="themeplate-message" class="updated"><p><strong>Settings updated.</strong></p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -139,7 +130,7 @@ class Page {
 
 	public function create() {
 
-		$page = ThemePlate()->key . '-' . $this->config['id'];
+		$page = $this->config['id'];
 
 		?>
 
