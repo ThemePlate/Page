@@ -14,10 +14,10 @@ use ThemePlate\Core\Helper\Main;
 
 class Page {
 
-	private $config;
+	private array $config;
 
 
-	public function __construct( $config ) {
+	public function __construct( array $config ) {
 
 		$expected = array(
 			'id',
@@ -45,7 +45,7 @@ class Page {
 	}
 
 
-	public function init() {
+	public function init(): void {
 
 		$option = $this->config['id'];
 
@@ -54,7 +54,7 @@ class Page {
 	}
 
 
-	public function menu() {
+	public function menu(): void {
 
 		$page = $this->config;
 
@@ -72,7 +72,7 @@ class Page {
 	}
 
 
-	private function add_menu( $page ) {
+	private function add_menu( array $page ): void {
 
 		add_menu_page(
 			// Page Title
@@ -94,7 +94,7 @@ class Page {
 	}
 
 
-	private function add_submenu( $page ) {
+	private function add_submenu( array $page ): void {
 
 		add_submenu_page(
 			// Parent Slug
@@ -114,7 +114,7 @@ class Page {
 	}
 
 
-	public function notices() {
+	public function notices(): void {
 
 		if ( ! isset( $_REQUEST['page'], $_REQUEST['settings-updated'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return;
@@ -129,7 +129,7 @@ class Page {
 	}
 
 
-	public function create() {
+	public function create(): void {
 
 		$page = $this->config['id'];
 
@@ -190,14 +190,14 @@ class Page {
 	}
 
 
-	public function save( $options ) {
+	public function save( array $options ): array {
 
 		return Box::prepare_save( $options );
 
 	}
 
 
-	public function footer() {
+	public function footer(): void {
 
 		require_once ABSPATH . 'wp-includes/class-wp-editor.php';
 		\_WP_Editors::wp_link_dialog();
