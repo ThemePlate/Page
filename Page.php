@@ -9,6 +9,8 @@
 
 namespace ThemePlate;
 
+use _WP_Editors;
+use Exception;
 use ThemePlate\Core\Helper\Box;
 use ThemePlate\Core\Helper\Main;
 
@@ -25,7 +27,7 @@ class Page {
 		);
 
 		if ( ! Main::is_complete( $config, $expected ) ) {
-			throw new \Exception();
+			throw new Exception();
 		}
 
 		$defaults     = array(
@@ -200,7 +202,7 @@ class Page {
 	public function footer(): void {
 
 		require_once ABSPATH . 'wp-includes/class-wp-editor.php';
-		\_WP_Editors::wp_link_dialog();
+		_WP_Editors::wp_link_dialog();
 
 	}
 
