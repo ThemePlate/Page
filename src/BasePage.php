@@ -49,6 +49,7 @@ abstract class BasePage implements CommonInterface {
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_notices', array( $this, 'notices' ) );
 		add_action( 'admin_print_footer_scripts', array( $this, 'footer' ) );
+		add_filter( 'default_option_' . $this->config['menu_slug'], '__return_empty_array' );
 
 	}
 
@@ -56,8 +57,12 @@ abstract class BasePage implements CommonInterface {
 	public function init(): void {
 
 		$option = $this->config['menu_slug'];
+		$args   = array(
+			'sanitize_callback' => array( $this, 'save' ),
+			'default'           => array(),
+		);
 
-		register_setting( $option, $option, array( $this, 'save' ) );
+		register_setting( $option, $option, $args );
 
 	}
 
@@ -136,7 +141,11 @@ abstract class BasePage implements CommonInterface {
 	}
 
 
-	public function save( ?array $options ): ?array {
+	public function save( ?array $options ): array {
+
+		if ( null === $options ) {
+			return array();
+		}
 
 		return Box::prepare_save( $options );
 

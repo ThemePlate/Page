@@ -20,6 +20,7 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$this->assertSame( 10, has_action( 'admin_menu', array( $page, 'menu' ) ) );
 		$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
 		$this->assertSame( 10, has_action( 'admin_print_footer_scripts', array( $page, 'footer' ) ) );
+		$this->assertSame( 10, has_filter( 'default_option_' . $this->default['menu_slug'], '__return_empty_array' ) );
 	}
 
 	/**
@@ -37,6 +38,7 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( "sanitize_option_{$option_group_name}", array( $page, 'save' ) ) );
 		$this->assertArrayHasKey( $option_group_name, $wp_registered_settings );
 		$this->assertSame( array( $page, 'save' ), $wp_registered_settings[ $option_group_name ]['sanitize_callback'] );
+		$this->assertSame( array(), $wp_registered_settings[ $option_group_name ]['default'] );
 	}
 
 	/**

@@ -119,7 +119,7 @@ trait TestCommon {
 		return array(
 			'with nothing passed' => array(
 				null,
-				null,
+				array(),
 			),
 			'with sequential empty-like' => array(
 				$empty_like_values,
