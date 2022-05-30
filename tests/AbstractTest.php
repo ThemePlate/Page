@@ -109,7 +109,7 @@ abstract class AbstractTest extends WP_UnitTestCase {
 	/**
 	 * @dataProvider for_save_filters_options
 	 */
-	public function test_save_filters_options( array $input, array $expected ): void {
+	public function test_save_filters_options( ?array $input, ?array $expected ): void {
 		$output = ( $this->get_tested_instance( $this->default ) )->save( $input );
 
 		$this->assertSame( $expected, $output );

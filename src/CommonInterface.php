@@ -21,7 +21,7 @@ interface CommonInterface {
 
 	public function create(): void;
 
-	public function save( array $options ): array;
+	public function save( ?array $options ): ?array;
 
 	public function footer(): void;
 

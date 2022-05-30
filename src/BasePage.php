@@ -136,7 +136,7 @@ abstract class BasePage implements CommonInterface {
 	}
 
 
-	public function save( array $options ): array {
+	public function save( ?array $options ): ?array {
 
 		return Box::prepare_save( $options );
 

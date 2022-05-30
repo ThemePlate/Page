@@ -117,6 +117,10 @@ trait TestCommon {
 
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
+			'with nothing passed' => array(
+				null,
+				null,
+			),
 			'with sequential empty-like' => array(
 				$empty_like_values,
 				$empty_like_values,
