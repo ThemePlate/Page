@@ -10,34 +10,40 @@
 namespace ThemePlate\Page;
 
 use _WP_Editors;
-use Exception;
 use ThemePlate\Core\Helper\Box;
-use ThemePlate\Core\Helper\Main;
 
-class Page {
+abstract class BasePage implements CommonInterface {
 
-	private array $config;
+	protected array $defaults = array(
+		'capability' => 'manage_options',
+		'menu_title' => '',
+		'menu_slug'  => '',
+		'position'   => null,
+	);
+	protected array $config;
+	protected string $title;
 
 
-	public function __construct( array $config ) {
+	protected function initialize( string $title, array $config ) {
 
-		$expected = array(
-			'id',
-			'title',
-		);
+		$this->title = $title;
 
-		if ( ! Main::is_complete( $config, $expected ) ) {
-			throw new Exception();
+		if ( empty( $config['menu_title'] ) ) {
+			$config['menu_title'] = $this->title;
 		}
 
-		$defaults     = array(
-			'capability' => 'manage_options',
-			'parent'     => '',
-			'menu'       => '',
-			'icon'       => '',
-			'position'   => null,
-		);
-		$this->config = Main::fool_proof( $defaults, $config );
+		if ( empty( $config['menu_slug'] ) ) {
+			$config['menu_slug'] = $config['menu_title'];
+		}
+
+		$config['menu_slug'] = sanitize_title( $config['menu_slug'] );
+
+		$this->config = array_merge( $this->defaults, $config );
+
+	}
+
+
+	public function setup(): void {
 
 		add_action( 'admin_init', array( $this, 'init' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ) );
@@ -49,69 +55,9 @@ class Page {
 
 	public function init(): void {
 
-		$option = $this->config['id'];
+		$option = $this->config['menu_slug'];
 
 		register_setting( $option, $option, array( $this, 'save' ) );
-
-	}
-
-
-	public function menu(): void {
-
-		$page = $this->config;
-
-		if ( empty( $page['parent'] ) ) {
-			$this->add_menu( $page );
-		} else {
-			if ( $page['parent'] === $page['id'] ) {
-				$this->add_menu( $page );
-				$page['menu'] = $page['title'];
-			}
-
-			$this->add_submenu( $page );
-		}
-
-	}
-
-
-	private function add_menu( array $page ): void {
-
-		add_menu_page(
-			// Page Title
-			$page['title'],
-			// Menu Title
-			$page['menu'] ?: $page['title'],
-			// Capability
-			$page['capability'],
-			// Menu Slug
-			$page['id'],
-			// Content Function
-			array( $this, 'create' ),
-			// Icon URL
-			$page['icon'],
-			// Menu Order
-			$page['position']
-		);
-
-	}
-
-
-	private function add_submenu( array $page ): void {
-
-		add_submenu_page(
-			// Parent Slug
-			$page['parent'],
-			// Page Title
-			$page['title'],
-			// Menu Title
-			$page['menu'] ?: $page['title'],
-			// Capability
-			$page['capability'],
-			// Menu Slug
-			$page['id'],
-			// Content Function
-			array( $this, 'create' )
-		);
 
 	}
 
@@ -122,9 +68,7 @@ class Page {
 			return;
 		}
 
-		$page = $this->config['id'];
-
-		if ( $_REQUEST['page'] === $page && 'true' === $_REQUEST['settings-updated'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( $_REQUEST['page'] === $this->config['menu_slug'] && 'true' === $_REQUEST['settings-updated'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 			echo '<div id="themeplate-message" class="updated"><p><strong>Settings updated.</strong></p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
@@ -133,7 +77,7 @@ class Page {
 
 	public function create(): void {
 
-		$page = $this->config['id'];
+		$page = $this->config['menu_slug'];
 
 		?>
 
