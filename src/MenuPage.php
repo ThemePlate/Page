@@ -24,7 +24,7 @@ class MenuPage extends BasePage {
 
 		$config = $this->config;
 
-		add_menu_page(
+		$this->hookname = add_menu_page(
 			// Page Title
 			$this->title,
 			// Menu Title

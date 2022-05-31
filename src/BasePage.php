@@ -22,6 +22,7 @@ abstract class BasePage implements CommonInterface {
 	);
 	protected array $config;
 	protected string $title;
+	protected string $hookname = '';
 
 
 	protected function initialize( string $title, array $config ) {
@@ -156,6 +157,13 @@ abstract class BasePage implements CommonInterface {
 
 		require_once ABSPATH . 'wp-includes/class-wp-editor.php';
 		_WP_Editors::wp_link_dialog();
+
+	}
+
+
+	public function get_hookname(): string {
+
+		return $this->hookname;
 
 	}
 

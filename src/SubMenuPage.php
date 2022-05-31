@@ -24,7 +24,7 @@ class SubMenuPage extends BasePage {
 
 		$config = $this->config;
 
-		add_submenu_page(
+		$this->hookname = add_submenu_page(
 			// Parent Slug
 			$config['parent_slug'],
 			// Page Title

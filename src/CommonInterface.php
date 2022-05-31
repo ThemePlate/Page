@@ -25,4 +25,6 @@ interface CommonInterface {
 
 	public function footer(): void;
 
+	public function get_hookname(): string;
+
 }
