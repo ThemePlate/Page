@@ -23,8 +23,6 @@ interface CommonInterface {
 
 	public function save( ?array $options ): array;
 
-	public function footer(): void;
-
 	public function get_hookname(): string;
 
 }

@@ -19,7 +19,6 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$this->assertSame( 10, has_action( 'admin_init', array( $page, 'init' ) ) );
 		$this->assertSame( 10, has_action( 'admin_menu', array( $page, 'menu' ) ) );
 		$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
-		$this->assertSame( 10, has_action( 'admin_print_footer_scripts', array( $page, 'footer' ) ) );
 		$this->assertSame( 10, has_filter( 'default_option_' . $this->default['menu_slug'], '__return_empty_array' ) );
 	}
 
@@ -115,13 +114,5 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$output = ( $this->get_tested_instance( $this->default ) )->save( $input );
 
 		$this->assertSame( $expected, $output );
-	}
-
-	public function test_footer_method(): void {
-		ob_start();
-		( $this->get_tested_instance( $this->default ) )->footer();
-		$output = ob_get_clean();
-
-		$this->assertIsString( $output );
 	}
 }
