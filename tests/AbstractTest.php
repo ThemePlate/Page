@@ -17,19 +17,25 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$page->setup();
 
 		$this->assertSame( 10, has_action( 'admin_menu', array( $page, 'menu' ) ) );
-		$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
 	}
 
 	/**
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
 	public function test_menu_method_registers_pages( array $parameters, string $option_group_name ) {
+		$page = $this->get_tested_instance( $parameters );
+
 		wp_set_current_user( 1 );
-		( $this->get_tested_instance( $parameters ) )->menu();
+		$page->menu();
 
 		$parent_slug = $parameters['parent_slug'];
 		$menu_slug   = $option_group_name;
 		$hookname    = get_plugin_page_hookname( $menu_slug, $parameters['parent_slug'] );
+
+		$this->assertSame( $hookname, $page->get_hookname() );
+		$this->assertSame( 10, has_action( 'load-' . $hookname, array( $page, 'load' ) ) );
+		$page->load();
+		$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
 
 		global $_registered_pages, $_parent_pages;
 

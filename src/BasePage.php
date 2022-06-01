@@ -44,6 +44,12 @@ abstract class BasePage implements CommonInterface {
 	public function setup(): void {
 
 		add_action( 'admin_menu', array( $this, 'menu' ) );
+
+	}
+
+
+	public function load(): void {
+
 		add_action( 'admin_notices', array( $this, 'notices' ) );
 
 	}

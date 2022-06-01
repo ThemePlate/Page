@@ -41,6 +41,8 @@ class SubMenuPage extends BasePage {
 			$config['position']
 		);
 
+		add_action( 'load-' . $this->hookname, array( $this, 'load' ) );
+
 	}
 
 }

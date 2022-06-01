@@ -15,6 +15,8 @@ interface CommonInterface {
 
 	public function menu(): void;
 
+	public function load(): void;
+
 	public function notices(): void;
 
 	public function create(): void;
