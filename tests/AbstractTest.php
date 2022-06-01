@@ -16,28 +16,8 @@ abstract class AbstractTest extends WP_UnitTestCase {
 
 		$page->setup();
 
-		$this->assertSame( 10, has_action( 'admin_init', array( $page, 'init' ) ) );
 		$this->assertSame( 10, has_action( 'admin_menu', array( $page, 'menu' ) ) );
 		$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
-		$this->assertSame( 10, has_filter( 'default_option_' . $this->default['menu_slug'], '__return_empty_array' ) );
-	}
-
-	/**
-	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
-	 */
-	public function test_init_method_registers_settings( array $parameters, string $option_group_name ) {
-		$page = $this->get_tested_instance( $parameters );
-
-		$page->init();
-
-		global $new_allowed_options, $wp_registered_settings;
-
-		$this->assertArrayHasKey( $option_group_name, $new_allowed_options );
-		$this->assertTrue( in_array( $option_group_name, $new_allowed_options[ $option_group_name ], true ) );
-		$this->assertSame( 10, has_filter( "sanitize_option_{$option_group_name}", array( $page, 'save' ) ) );
-		$this->assertArrayHasKey( $option_group_name, $wp_registered_settings );
-		$this->assertSame( array( $page, 'save' ), $wp_registered_settings[ $option_group_name ]['sanitize_callback'] );
-		$this->assertSame( array(), $wp_registered_settings[ $option_group_name ]['default'] );
 	}
 
 	/**
@@ -105,14 +85,5 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$this->assertSame( 1, did_action( 'themeplate_settings_' . $option_group_name . '_side' ) );
 		$this->assertSame( 1, did_action( 'themeplate_settings_' . $option_group_name . '_normal' ) );
 		$this->assertSame( 1, did_action( 'themeplate_settings_' . $option_group_name . '_advanced' ) );
-	}
-
-	/**
-	 * @dataProvider for_save_filters_options
-	 */
-	public function test_save_filters_options( ?array $input, ?array $expected ): void {
-		$output = ( $this->get_tested_instance( $this->default ) )->save( $input );
-
-		$this->assertSame( $expected, $output );
 	}
 }

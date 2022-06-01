@@ -9,8 +9,6 @@
 
 namespace ThemePlate\Page;
 
-use ThemePlate\Core\Helper\Box;
-
 abstract class BasePage implements CommonInterface {
 
 	protected array $defaults = array(
@@ -45,23 +43,8 @@ abstract class BasePage implements CommonInterface {
 
 	public function setup(): void {
 
-		add_action( 'admin_init', array( $this, 'init' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_notices', array( $this, 'notices' ) );
-		add_filter( 'default_option_' . $this->config['menu_slug'], '__return_empty_array' );
-
-	}
-
-
-	public function init(): void {
-
-		$option = $this->config['menu_slug'];
-		$args   = array(
-			'sanitize_callback' => array( $this, 'save' ),
-			'default'           => array(),
-		);
-
-		register_setting( $option, $option, $args );
 
 	}
 
@@ -136,17 +119,6 @@ abstract class BasePage implements CommonInterface {
 		</div>
 
 		<?php
-
-	}
-
-
-	public function save( ?array $options ): array {
-
-		if ( null === $options ) {
-			return array();
-		}
-
-		return Box::prepare_save( $options );
 
 	}
 

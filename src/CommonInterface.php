@@ -13,15 +13,11 @@ interface CommonInterface {
 
 	public function setup(): void;
 
-	public function init(): void;
-
 	public function menu(): void;
 
 	public function notices(): void;
 
 	public function create(): void;
-
-	public function save( ?array $options ): array;
 
 	public function get_hookname(): string;
 
