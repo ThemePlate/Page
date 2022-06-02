@@ -16,7 +16,17 @@ abstract class AbstractTest extends WP_UnitTestCase {
 
 		$page->setup();
 
+		$this->assertSame( 10, has_filter( 'allowed_options', array( $page, 'maybe_init_option' ) ) );
 		$this->assertSame( 10, has_action( 'admin_menu', array( $page, 'menu' ) ) );
+	}
+
+	/**
+	 * @dataProvider for_maybe_init_option
+	 */
+	public function test_maybe_init_option( array $options ): void {
+		$page = $this->get_tested_instance( $this->default );
+
+		$this->assertArrayHasKey( $this->default['menu_slug'], $page->maybe_init_option( $options ) );
 	}
 
 	/**

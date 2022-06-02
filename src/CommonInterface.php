@@ -13,6 +13,8 @@ interface CommonInterface {
 
 	public function setup(): void;
 
+	public function maybe_init_option( array $options ): array;
+
 	public function menu(): void;
 
 	public function load(): void;

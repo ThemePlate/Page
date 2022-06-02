@@ -42,6 +42,28 @@ trait TestCommon {
 		return array( compact( 'page_title', 'parent_slug', 'config' ), $option_group_name );
 	}
 
+	public function for_maybe_init_option(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with an empty list' => array(
+				array(),
+			),
+			'with a list without our option name' => array(
+				array(
+					'default' => array(),
+					'another' => array(),
+				),
+			),
+			'with a list that already has our option name' => array(
+				array(
+					'random' => array(),
+					$this->default['menu_slug'] => array(),
+				),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
 	public function for_correctly_fired_hooks_and_assigned_variables(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
