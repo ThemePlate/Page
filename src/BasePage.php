@@ -90,7 +90,7 @@ abstract class BasePage implements CommonInterface {
 		?>
 
 		<div class="wrap">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<h1><?php echo esc_html( $this->title ); ?></h1>
 
 			<form action="options.php" method="post">
 				<div id="poststuff">
@@ -107,7 +107,7 @@ abstract class BasePage implements CommonInterface {
 
 						<div id="postbox-container-1" class="postbox-container">
 							<div id="submitdiv" class="postbox">
-								<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+								<h2><?php echo esc_html( $this->title ); ?></h2>
 
 								<div id="major-publishing-actions">
 									<?php settings_fields( $page ); ?>
