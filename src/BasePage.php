@@ -65,7 +65,7 @@ abstract class BasePage implements CommonInterface {
 		$page = $this->config['menu_slug'];
 
 		add_action( 'admin_notices', array( $this, 'notices' ) );
-		do_action( 'themeplate_page_' . $page . '_load', $page );
+		do_action( 'themeplate_page_' . $page . '_load', $this->config );
 
 	}
 
@@ -98,10 +98,10 @@ abstract class BasePage implements CommonInterface {
 						<?php if ( has_action( $page . '_content' ) || has_action( 'themeplate_settings_' . $page . '_after_title' ) ) : ?>
 							<div id="post-body-content">
 								<div id="after_title-sortables" class="meta-box-sortables">
-									<?php do_action( 'themeplate_settings_' . $page . '_after_title' ); ?>
+									<?php do_action( 'themeplate_settings_' . $page . '_after_title', $this->config ); ?>
 								</div>
 
-								<?php do_action( $page . '_content' ); ?>
+								<?php do_action( $page . '_content', $this->config ); ?>
 							</div>
 						<?php endif; ?>
 
@@ -121,17 +121,17 @@ abstract class BasePage implements CommonInterface {
 							</div>
 
 							<div id="side-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_side' ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_side', $this->config ); ?>
 							</div>
 						</div>
 
 						<div id="postbox-container-2" class="postbox-container">
 							<div id="normal-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_normal' ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_normal', $this->config ); ?>
 							</div>
 
 							<div id="advanced-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_advanced' ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_advanced', $this->config ); ?>
 							</div>
 						</div>
 					</div>
