@@ -44,7 +44,12 @@ abstract class BasePage implements CommonInterface {
 	public function setup(): void {
 
 		add_filter( 'allowed_options', array( $this, 'maybe_init_option' ) );
-		add_action( 'admin_menu', array( $this, 'menu' ) );
+
+		if ( did_action( 'admin_menu' ) ) {
+			$this->menu();// @codeCoverageIgnore
+		} else {
+			add_action( 'admin_menu', array( $this, 'menu' ) );
+		}
 
 	}
 
