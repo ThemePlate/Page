@@ -70,7 +70,7 @@ abstract class BasePage implements CommonInterface {
 		$page = $this->config['menu_slug'];
 
 		add_action( 'admin_notices', array( $this, 'notices' ) );
-		do_action( 'themeplate_page_' . $page . '_load', $page );
+		do_action( 'themeplate_page_' . $page . '_load', $this->get_hookname() );
 
 	}
 
