@@ -103,7 +103,7 @@ abstract class BasePage implements CommonInterface {
 						<?php if ( has_action( $page . '_content' ) || has_action( 'themeplate_settings_' . $page . '_after_title' ) ) : ?>
 							<div id="post-body-content">
 								<div id="after_title-sortables" class="meta-box-sortables">
-									<?php do_action( 'themeplate_settings_' . $page . '_after_title' ); ?>
+									<?php do_action( 'themeplate_settings_' . $page . '_after_title', $page ); ?>
 								</div>
 
 								<?php do_action( $page . '_content' ); ?>
@@ -126,17 +126,17 @@ abstract class BasePage implements CommonInterface {
 							</div>
 
 							<div id="side-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_side' ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_side', $page ); ?>
 							</div>
 						</div>
 
 						<div id="postbox-container-2" class="postbox-container">
 							<div id="normal-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_normal' ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_normal', $page ); ?>
 							</div>
 
 							<div id="advanced-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_advanced' ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_advanced', $page ); ?>
 							</div>
 						</div>
 					</div>
