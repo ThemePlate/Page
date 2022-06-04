@@ -70,7 +70,7 @@ abstract class BasePage implements CommonInterface {
 		$page = $this->config['menu_slug'];
 
 		add_action( 'admin_notices', array( $this, 'notices' ) );
-		do_action( 'themeplate_page_' . $page . '_load', $this->get_hookname() );
+		do_action( 'themeplate_page_' . $page . '_load', $this->get_hookname(), $this->config );
 
 	}
 
@@ -103,10 +103,10 @@ abstract class BasePage implements CommonInterface {
 						<?php if ( has_action( $page . '_content' ) || has_action( 'themeplate_settings_' . $page . '_after_title' ) ) : ?>
 							<div id="post-body-content">
 								<div id="after_title-sortables" class="meta-box-sortables">
-									<?php do_action( 'themeplate_settings_' . $page . '_after_title', $page ); ?>
+									<?php do_action( 'themeplate_settings_' . $page . '_after_title', $page, $this->config ); ?>
 								</div>
 
-								<?php do_action( 'themeplate_page_' . $page . '_content', $this->get_hookname() ); ?>
+								<?php do_action( 'themeplate_page_' . $page . '_content', $this->get_hookname(), $this->config ); ?>
 							</div>
 						<?php endif; ?>
 
@@ -126,17 +126,17 @@ abstract class BasePage implements CommonInterface {
 							</div>
 
 							<div id="side-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_side', $page ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_side', $page, $this->config ); ?>
 							</div>
 						</div>
 
 						<div id="postbox-container-2" class="postbox-container">
 							<div id="normal-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_normal', $page ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_normal', $page, $this->config ); ?>
 							</div>
 
 							<div id="advanced-sortables" class="meta-box-sortables">
-								<?php do_action( 'themeplate_settings_' . $page . '_advanced', $page ); ?>
+								<?php do_action( 'themeplate_settings_' . $page . '_advanced', $page, $this->config ); ?>
 							</div>
 						</div>
 					</div>
