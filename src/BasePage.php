@@ -106,7 +106,7 @@ abstract class BasePage implements CommonInterface {
 									<?php do_action( 'themeplate_settings_' . $page . '_after_title', $page ); ?>
 								</div>
 
-								<?php do_action( $page . '_content' ); ?>
+								<?php do_action( 'themeplate_page_' . $page . '_content', $this->get_hookname() ); ?>
 							</div>
 						<?php endif; ?>
 
