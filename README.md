@@ -25,6 +25,7 @@ $args = array(
 
 /** https://developer.wordpress.org/reference/functions/add_submenu_page/#parameters */
 $args = array(
+	// Used as the settings group name
 	'menu_slug'  => 'site-reports/print-download',
 	'capability' => 'moderate_comments',
 );
