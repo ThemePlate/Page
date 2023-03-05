@@ -6,6 +6,7 @@
 
 namespace Tests;
 
+use ThemePlate\Page\Interfaces\SubMenuPageInterface;
 use WP_UnitTestCase;
 
 abstract class AbstractTest extends WP_UnitTestCase {
@@ -33,14 +34,21 @@ abstract class AbstractTest extends WP_UnitTestCase {
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
 	public function test_menu_method_registers_pages( array $parameters, string $option_group_name ) {
+		$parent_slug = $parameters['parent_slug'];
+
+		unset( $parameters['parent_slug'] );
+
 		$page = $this->get_tested_instance( $parameters );
+
+		if ( '' !== $parent_slug && $page instanceof SubMenuPageInterface ) {
+			$page->parent( $parent_slug );
+		}
 
 		wp_set_current_user( 1 );
 		$page->menu();
 
-		$parent_slug = $parameters['parent_slug'];
-		$menu_slug   = $option_group_name;
-		$hookname    = get_plugin_page_hookname( $menu_slug, $parameters['parent_slug'] );
+		$menu_slug = $option_group_name;
+		$hookname  = get_plugin_page_hookname( $menu_slug, $parent_slug );
 
 		$this->assertSame( $hookname, $page->get_hookname() );
 		$this->assertSame( 10, has_action( 'load-' . $hookname, array( $page, 'load' ) ) );
@@ -57,7 +65,7 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		if ( '' === $parent_slug ) {
 			$this->assertFalse( $_parent_pages[ $menu_slug ] );
 		} else {
-			$this->assertSame( $parameters['parent_slug'], $_parent_pages[ $menu_slug ] );
+			$this->assertSame( $parent_slug, $_parent_pages[ $menu_slug ] );
 		}
 	}
 

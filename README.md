@@ -8,7 +8,7 @@ use ThemePlate\Page\SubMenuPage;
 
 // One-liner
 ( new MenuPage( 'Theme Options' ) )->setup();
-( new SubMenuPage( 'Plugin Settings', 'plugins.php' ) )->setup();
+( new SubMenuPage( 'Plugin Settings' ) )->parent( 'plugins.php' )->setup();
 ```
 
 ### Available config
@@ -30,5 +30,5 @@ $args = array(
 	'capability' => 'moderate_comments',
 );
 
-( new SubMenuPage( 'Print or Download', 'site-reports', $args ) )->setup();
+( new SubMenuPage( 'Print or Download', '', $args ) )->parent( 'site-reports' )->setup();
 ```
