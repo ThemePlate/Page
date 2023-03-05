@@ -9,13 +9,24 @@
 
 namespace ThemePlate\Page;
 
-class SubMenuPage extends BasePage {
+use ThemePlate\Page\Interfaces\SubMenuPageInterface;
+
+class SubMenuPage extends BasePage implements SubMenuPageInterface {
 
 	public function __construct( string $title, string $parent_slug, array $config = array() ) {
 
 		$config['parent_slug'] = $parent_slug;
 
 		$this->initialize( $title, $config );
+
+	}
+
+
+	public function parent( string $parent ): self {
+
+		$this->config['parent_slug'] = $parent;
+
+		return $this;
 
 	}
 
