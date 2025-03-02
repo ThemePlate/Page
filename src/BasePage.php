@@ -120,7 +120,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 			<form action="options.php" method="post">
 				<div id="poststuff">
 					<div id="post-body" class="metabox-holder columns-2">
-						<?php if ( has_action( $page . '_content' ) || has_action( 'themeplate_settings_' . $page . '_after_title' ) ) : ?>
+						<?php if ( has_action( 'themeplate_page_' . $page . '_content' ) || has_action( 'themeplate_settings_' . $page . '_after_title' ) ) : ?>
 							<div id="post-body-content">
 								<div id="after_title-sortables" class="meta-box-sortables">
 									<?php do_action( 'themeplate_settings_' . $page . '_after_title', $page, $this->config ); ?>

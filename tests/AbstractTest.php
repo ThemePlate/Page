@@ -101,11 +101,12 @@ abstract class AbstractTest extends WP_UnitTestCase {
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
 	public function test_create_method_layouts_pages( array $parameters, string $option_group_name ) {
-		add_action( $option_group_name . '_content', '__return_null' );
+		add_action( 'themeplate_page_' . $option_group_name . '_content', '__return_null' );
 		ob_start();
 		( $this->get_tested_instance( $parameters ) )->create();
 		ob_get_clean();
 
+		$this->assertSame( 1, did_action( 'themeplate_page_' . $option_group_name . '_content' ) );
 		$this->assertSame( 1, did_action( 'themeplate_settings_' . $option_group_name . '_after_title' ) );
 		$this->assertSame( 1, did_action( 'themeplate_settings_' . $option_group_name . '_side' ) );
 		$this->assertSame( 1, did_action( 'themeplate_settings_' . $option_group_name . '_normal' ) );
