@@ -52,6 +52,24 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	}
 
 
+	public function title( string $title ): static {
+
+		$this->title = $title;
+
+		return $this;
+
+	}
+
+
+	public function slug( string $slug ): static {
+
+		$this->config['menu_slug'] = $slug;
+
+		return $this;
+
+	}
+
+
 	public function position( int $position ): static {
 
 		$this->config['position'] = $position;
