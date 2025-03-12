@@ -89,7 +89,10 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 		$page = $this->config['menu_slug'];
 
-		add_action( 'admin_notices', array( $this, 'notices' ) );
+		if ( empty( $this->config['parent_slug'] ) || 'options-general.php' !== $this->config['parent_slug'] ) {
+			add_action( 'admin_notices', array( $this, 'notices' ) );
+		}
+
 		do_action( 'themeplate_page_' . $page . '_load', $this->get_hookname(), $this->config );
 
 	}

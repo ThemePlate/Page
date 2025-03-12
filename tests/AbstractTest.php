@@ -53,7 +53,11 @@ abstract class AbstractTest extends WP_UnitTestCase {
 		$this->assertSame( $hookname, $page->get_hookname() );
 		$this->assertSame( 10, has_action( 'load-' . $hookname, array( $page, 'load' ) ) );
 		$page->load();
-		$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
+
+		if ( empty( $parent_slug ) || 'options-general.php' !== $parent_slug ) {
+			$this->assertSame( 10, has_action( 'admin_notices', array( $page, 'notices' ) ) );
+		}
+
 		$this->assertSame( 1, did_action( 'themeplate_page_' . $menu_slug . '_load' ) );
 
 		global $_registered_pages, $_parent_pages;
