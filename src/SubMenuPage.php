@@ -26,9 +26,9 @@ class SubMenuPage extends BasePage implements SubMenuPageInterface {
 	}
 
 
-	public function parent( string $parent ): self {
+	public function parent( string $slug ): static {
 
-		$this->config['parent_slug'] = $parent;
+		$this->config['parent_slug'] = $slug;
 
 		return $this;
 

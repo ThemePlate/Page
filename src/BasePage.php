@@ -43,7 +43,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	}
 
 
-	public function capability( string $capability ): self {
+	public function capability( string $capability ): static {
 
 		$this->config['capability'] = $capability;
 
@@ -52,7 +52,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	}
 
 
-	public function position( int $position ): self {
+	public function position( int $position ): static {
 
 		$this->config['position'] = $position;
 
