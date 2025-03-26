@@ -33,7 +33,7 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	/**
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
-	public function test_menu_method_registers_pages( array $parameters, string $option_group_name ) {
+	public function test_menu_method_registers_pages( array $parameters, string $option_group_name ): void {
 		$parent_slug = $parameters['parent_slug'];
 
 		unset( $parameters['parent_slug'] );
@@ -104,8 +104,8 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	/**
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
-	public function test_create_method_layouts_pages( array $parameters, string $option_group_name ) {
-		add_action( 'themeplate_page_' . $option_group_name . '_content', function () {} );
+	public function test_create_method_layouts_pages( array $parameters, string $option_group_name ): void {
+		add_action( 'themeplate_page_' . $option_group_name . '_content', function (): void {} );
 		ob_start();
 		( $this->get_tested_instance( $parameters ) )->create();
 		ob_get_clean();

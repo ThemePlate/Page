@@ -24,7 +24,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	protected string $hookname = '';
 
 
-	protected function initialize( string $title, array $config ) {
+	protected function initialize( string $title, array $config ): void {
 
 		$this->title = $title;
 
