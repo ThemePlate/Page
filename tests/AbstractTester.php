@@ -9,7 +9,7 @@ namespace Tests;
 use ThemePlate\Page\Interfaces\SubMenuPageInterface;
 use WP_UnitTestCase;
 
-abstract class AbstractTest extends WP_UnitTestCase {
+abstract class AbstractTester extends WP_UnitTestCase {
 	use TestCommon;
 
 	public function test_firing_setup_actually_add_hooks(): void {
