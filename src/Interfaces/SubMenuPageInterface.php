@@ -11,6 +11,6 @@ namespace ThemePlate\Page\Interfaces;
 
 interface SubMenuPageInterface {
 
-	public function parent( string $slug ): static;
+	public function parent( string $slug ): self;
 
 }
