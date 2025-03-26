@@ -105,7 +105,7 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
 	public function test_create_method_layouts_pages( array $parameters, string $option_group_name ) {
-		add_action( 'themeplate_page_' . $option_group_name . '_content', '__return_null' );
+		add_action( 'themeplate_page_' . $option_group_name . '_content', function () {} );
 		ob_start();
 		( $this->get_tested_instance( $parameters ) )->create();
 		ob_get_clean();
