@@ -11,6 +11,8 @@ namespace ThemePlate\Page\Interfaces;
 
 interface PageInterface {
 
+	public function config( array $config ): self;
+
 	public function capability( string $capability ): self;
 
 	public function title( string $title ): self;
