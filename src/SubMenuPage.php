@@ -19,6 +19,10 @@ class SubMenuPage extends BasePage implements SubMenuPageInterface {
 			_deprecated_argument( __METHOD__, '2.1.0', 'Use the new ' . esc_html( self::class . '::parent()' ) . ' instead.' );
 		}
 
+		if ( array() !== $config ) {
+			_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::config()' ) . ' instead.' );
+		}
+
 		$config['parent_slug'] = $parent_slug;
 
 		$this->initialize( $title, $config );

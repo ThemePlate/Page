@@ -17,6 +17,10 @@ class MenuPage extends BasePage implements MenuPageInterface {
 
 		$this->defaults['icon_url'] = '';
 
+		if ( array() !== $config ) {
+			_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::config()' ) . ' instead.' );
+		}
+
 		$this->initialize( $title, $config );
 
 	}
