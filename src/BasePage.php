@@ -64,7 +64,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 	public function title( string $title ): self {
 
-		$this->title = $title;
+		$this->config['menu_title'] = $title;
 
 		return $this;
 
