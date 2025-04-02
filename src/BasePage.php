@@ -29,6 +29,13 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 		$this->title = $title;
 
+		$this->config( $config );
+
+	}
+
+
+	public function config( array $config ): self {
+
 		if ( empty( $config['menu_title'] ) ) {
 			$config['menu_title'] = $this->title;
 		}
@@ -37,16 +44,9 @@ abstract class BasePage implements CommonInterface, PageInterface {
 			$config['menu_slug'] = $config['menu_title'];
 		}
 
-		$config['menu_slug'] = sanitize_title( $config['menu_slug'] );
-
-		$this->config( $config );
-
-	}
-
-
-	public function config( array $config ): self {
-
 		$this->config = array_merge( $this->defaults, $this->config, $config );
+
+		$this->slug( $config['menu_slug'] );
 
 		return $this;
 
@@ -73,7 +73,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 	public function slug( string $slug ): self {
 
-		$this->config['menu_slug'] = $slug;
+		$this->config['menu_slug'] = sanitize_title( $slug );
 
 		return $this;
 
