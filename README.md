@@ -13,22 +13,41 @@ use ThemePlate\Page\SubMenuPage;
 
 ### Available config
 ```php
-/** https://developer.wordpress.org/reference/functions/add_menu_page/#parameters */
 $args = array(
 	'menu_title' => 'Site Reports',
 	'icon_url'   => 'dashicons-printer',
 	'position'   => 2,
 );
 
-( new MenuPage( 'Available Reports', $args ) )->setup();
+( new MenuPage( 'Available Reports' ) )->config( $args )->setup();
 
+// or
 
-/** https://developer.wordpress.org/reference/functions/add_submenu_page/#parameters */
+( new MenuPage( 'Available Reports' ) )
+	->title( 'Site Reports' )
+	->icon( 'dashicons-printer' )
+	->position( 2 )
+	// ->capability( 'moderate_comments' )
+	// ->slug( 'site-reports' )
+	->setup();
+```
+
+```php
 $args = array(
 	// Used as the settings group name
 	'menu_slug'  => 'site-reports/print-download',
 	'capability' => 'moderate_comments',
 );
 
-( new SubMenuPage( 'Print or Download', '', $args ) )->parent( 'site-reports' )->setup();
+( new SubMenuPage( 'Print or Download' ) )->config( $args )->parent( 'site-reports' )->setup();
+
+// or
+
+( new SubMenuPage( 'Print or Download' ) )
+	->slug( 'site-reports/print-download' )
+	->capability( 'moderate_comments' )
+	->parent( 'site-reports' )
+	// ->position( 2 )
+	// ->title( 'Print / Download' )
+	->setup();
 ```
