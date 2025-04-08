@@ -19,6 +19,26 @@ class MenuPage extends BasePage implements MenuPageInterface {
 
 		if ( array() !== $config ) {
 			_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::config()' ) . ' instead.' );
+
+			if ( isset( $config['capability'] ) ) {
+				_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::capability()' ) . ' instead.' );
+			}
+
+			if ( isset( $config['menu_title'] ) ) {
+				_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::title()' ) . ' instead.' );
+			}
+
+			if ( isset( $config['menu_slug'] ) ) {
+				_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::slug()' ) . ' instead.' );
+			}
+
+			if ( isset( $config['position'] ) ) {
+				_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::position()' ) . ' instead.' );
+			}
+
+			if ( isset( $config['icon_url'] ) ) {
+				_deprecated_argument( __METHOD__, '2.5.0', 'Use the new ' . esc_html( self::class . '::icon()' ) . ' instead.' );
+			}
 		}
 
 		$this->initialize( $title, $config );
