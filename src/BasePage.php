@@ -13,17 +13,35 @@ use ThemePlate\Page\Interfaces\PageInterface;
 
 abstract class BasePage implements CommonInterface, PageInterface {
 
+	/**
+	 * @var array{
+	 *     capability: string,
+	 *     menu_title: string,
+	 *     menu_slug: string,
+	 *     position: int|null,
+	 *     icon_url: string,
+	 *     parent_slug: string,
+	 * }
+	 */
 	protected array $config = array(
-		'capability' => 'manage_options',
-		'menu_title' => '',
-		'menu_slug'  => '',
-		'position'   => null,
+		'capability'  => 'manage_options',
+		'menu_title'  => '',
+		'menu_slug'   => '',
+		'position'    => null,
+		'icon_url'    => '',
+		'parent_slug' => '',
 	);
 
 	protected string $title;
 	protected string $hookname = '';
 
 
+	/**
+	 * @param array{
+	 *     menu_title?: string,
+	 *     menu_slug?: string,
+	 * } $config
+	 */
 	protected function initialize( string $title, array $config ): void {
 
 		$this->title = $title;
@@ -33,6 +51,12 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	}
 
 
+	/**
+	 * @param array{
+	 *     menu_title?: string,
+	 *     menu_slug?: string,
+	 * } $config
+	 */
 	public function config( array $config ): self {
 
 		if ( empty( $config['menu_title'] ) ) {
@@ -101,6 +125,10 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	}
 
 
+	/**
+	 * @param array<string, string|int> $options
+	 * @return array<string, string|int|array{}>
+	 */
 	public function maybe_init_option( array $options ): array {
 
 		if ( ! array_key_exists( $this->config['menu_slug'], $options ) ) {

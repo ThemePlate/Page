@@ -10,6 +10,17 @@ use ThemePlate\Page\CommonInterface;
 use ThemePlate\Page\SubMenuPage;
 
 trait TestCommon {
+	/**
+	 * @var array{
+	 *     page_title: string,
+	 *     parent_slug: string,
+	 *     capability: string,
+	 *     menu_title: string,
+	 *     menu_slug: string,
+	 *     position: int,
+	 *     config: array{}
+	 * }
+	 */
 	protected array $default = array(
 		'page_title'  => 'Tester',
 		'parent_slug' => 'options-general.php',
@@ -20,8 +31,10 @@ trait TestCommon {
 		'config'      => array(),
 	);
 
+	/** @param array<string, mixed> $args */
 	abstract protected function get_tested_instance( array $args ): CommonInterface;
 
+	/** @return array<int, string|array<string, string|int|array<string, string>>> */
 	protected function generate_data_for_register_settings( string $page_title, string $menu_title, string $menu_slug, string $option_group_name ): array {
 		$config = array();
 
@@ -42,6 +55,7 @@ trait TestCommon {
 		return array( compact( 'page_title', 'parent_slug', 'config' ), $option_group_name );
 	}
 
+	/** @return array<string, array<int, array{}|array<string, array{}>>> */
 	public function for_maybe_init_option(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -64,6 +78,7 @@ trait TestCommon {
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
 
+	/** @return array<string, array<int, string|array<string, string|int|array<string, string>>>> */
 	public function for_correctly_fired_hooks_and_assigned_variables(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -101,6 +116,7 @@ trait TestCommon {
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
 
+	/** @return array<string, array<int, null|string>> */
 	public function for_notices_method_echoing_a_message(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(

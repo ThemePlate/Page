@@ -13,6 +13,7 @@ use ThemePlate\Page\Interfaces\MenuPageInterface;
 
 class MenuPage extends BasePage implements MenuPageInterface {
 
+	/** @param array<string, mixed>|array{} $config */
 	public function __construct( string $title, array $config = array() ) {
 
 		$this->config['icon_url'] = '';

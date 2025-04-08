@@ -13,6 +13,7 @@ use ThemePlate\Page\Interfaces\SubMenuPageInterface;
 
 class SubMenuPage extends BasePage implements SubMenuPageInterface {
 
+	/** @param array<string, mixed>|array{} $config */
 	public function __construct( string $title, string $parent_slug = '', array $config = array() ) {
 
 		if ( '' !== $parent_slug ) {

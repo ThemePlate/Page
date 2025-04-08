@@ -22,6 +22,7 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @param array<string, int|string> $options
 	 * @dataProvider for_maybe_init_option
 	 */
 	public function test_maybe_init_option( array $options ): void {
@@ -31,6 +32,7 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @param array<string, string> $parameters
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
 	public function test_menu_method_registers_pages( array $parameters, string $option_group_name ): void {
@@ -79,11 +81,11 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	public function test_notices_method_echoing_a_message( ?string $page, ?string $updated ): void {
 		global $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( $page ) {
+		if ( null !== $page && '' !== $page ) {
 			$_REQUEST['page'] = $page;
 		}
 
-		if ( $updated ) {
+		if ( null !== $updated && '' !== $updated ) {
 			$_REQUEST['settings-updated'] = $updated;
 		}
 
@@ -102,6 +104,7 @@ abstract class AbstractTester extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @param array<string, array<int, string|array<string, mixed>>> $parameters
 	 * @dataProvider for_correctly_fired_hooks_and_assigned_variables
 	 */
 	public function test_create_method_layouts_pages( array $parameters, string $option_group_name ): void {
