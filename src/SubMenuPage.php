@@ -43,7 +43,7 @@ class SubMenuPage extends BasePage implements SubMenuPageInterface {
 
 		$config = $this->config;
 
-		$this->hookname = add_submenu_page(
+		$this->hookname = (string) add_submenu_page(
 			// Parent Slug
 			$config['parent_slug'],
 			// Page Title
