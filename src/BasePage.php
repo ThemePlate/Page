@@ -13,14 +13,13 @@ use ThemePlate\Page\Interfaces\PageInterface;
 
 abstract class BasePage implements CommonInterface, PageInterface {
 
-	protected array $defaults = array(
+	protected array $config = array(
 		'capability' => 'manage_options',
 		'menu_title' => '',
 		'menu_slug'  => '',
 		'position'   => null,
 	);
 
-	protected array $config = array();
 	protected string $title;
 	protected string $hookname = '';
 
@@ -44,7 +43,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 			$config['menu_slug'] = $config['menu_title'];
 		}
 
-		$this->config = array_merge( $this->defaults, $this->config, $config );
+		$this->config = array_merge( $this->config, $config );
 
 		$this->slug( $config['menu_slug'] );
 
