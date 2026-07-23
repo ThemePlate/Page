@@ -48,4 +48,26 @@ class MenuPageTest extends AbstractTester {
 
 		$this->assertSame( 'toplevel_page_0', $page->get_hookname() );
 	}
+
+
+	public function test_icon_is_fluent_and_updates_page_config(): void {
+
+		$config = array();
+		$page   = new MenuPage( 'Test' );
+
+		add_action(
+			'themeplate_page_test_load',
+			static function ( string $hookname, array $loaded_config ) use ( &$config ): void {
+				$config = $loaded_config;
+			},
+			10,
+			2
+		);
+
+		$this->assertSame( $page, $page->icon( 'dashicons-admin-generic' ) );
+		$page->load();
+
+		$this->assertSame( 'dashicons-admin-generic', $config['icon_url'] );
+
+	}
 }

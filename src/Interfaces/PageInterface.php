@@ -17,8 +17,6 @@ interface PageInterface {
 	 *     menu_title?: string,
 	 *     menu_slug?: string,
 	 *     position?: int,
-	 *     icon_url?: string,
-	 *     parent_slug?: string,
 	 * } $config
 	 */
 	public function config( array $config ): self;

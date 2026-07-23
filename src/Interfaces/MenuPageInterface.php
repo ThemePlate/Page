@@ -9,6 +9,7 @@
 
 namespace ThemePlate\Page\Interfaces;
 
+/** `config()` also accepts `icon_url`. */
 interface MenuPageInterface {
 
 	public function icon( string $url ): self;

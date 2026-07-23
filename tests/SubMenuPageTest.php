@@ -28,4 +28,26 @@ class SubMenuPageTest extends AbstractTester {
 		$this->assertSame( '', $page->get_hookname() );
 		$this->assertFalse( has_action( 'load-', array( $page, 'load' ) ) );
 	}
+
+
+	public function test_parent_is_fluent_and_sanitizes_parent_slug(): void {
+
+		$config = array();
+		$page   = new SubMenuPage( 'Test' );
+
+		add_action(
+			'themeplate_page_test_load',
+			static function ( string $hookname, array $loaded_config ) use ( &$config ): void {
+				$config = $loaded_config;
+			},
+			10,
+			2
+		);
+
+		$this->assertSame( $page, $page->parent( '<b>options-general.php</b>' ) );
+		$page->load();
+
+		$this->assertSame( 'options-general.php', $config['parent_slug'] );
+
+	}
 }

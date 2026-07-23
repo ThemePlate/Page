@@ -86,6 +86,83 @@ abstract class AbstractTester extends WP_UnitTestCase {
 
 	}
 
+
+	public function test_capability_is_fluent_and_updates_save_capability(): void {
+
+		$page = $this->get_tested_instance( $this->default );
+
+		$this->assertInstanceOf( \ThemePlate\Page\Interfaces\PageInterface::class, $page );
+		$this->assertSame( $page, $page->capability( 'edit_posts' ) );
+		$page->setup();
+		$this->assertSame(
+			'edit_posts',
+			apply_filters( 'option_page_capability_' . $this->default['menu_slug'], 'manage_options' )
+		);
+
+	}
+
+
+	public function test_title_is_fluent_and_updates_page_config(): void {
+
+		$config = array();
+		$page   = $this->get_tested_instance( $this->default );
+
+		$this->assertInstanceOf( \ThemePlate\Page\Interfaces\PageInterface::class, $page );
+		add_action(
+			'themeplate_page_' . $this->default['menu_slug'] . '_load',
+			static function ( string $hookname, array $loaded_config ) use ( &$config ): void {
+				$config = $loaded_config;
+			},
+			10,
+			2
+		);
+
+		$this->assertSame( $page, $page->title( 'Updated Title' ) );
+		$page->load();
+
+		$this->assertSame( 'Updated Title', $config['menu_title'] );
+
+	}
+
+
+	public function test_slug_is_fluent_and_updates_settings_group(): void {
+
+		$page = $this->get_tested_instance( $this->default );
+
+		$this->assertInstanceOf( \ThemePlate\Page\Interfaces\PageInterface::class, $page );
+		$this->assertSame( $page, $page->slug( 'Updated Slug' ) );
+		ob_start();
+		$page->create();
+		$output = ob_get_clean();
+
+		$this->assertIsString( $output );
+		$this->assertStringContainsString( "name='option_page' value='updated-slug'", $output );
+
+	}
+
+
+	public function test_position_is_fluent_and_updates_page_config(): void {
+
+		$config = array();
+		$page   = $this->get_tested_instance( $this->default );
+
+		$this->assertInstanceOf( \ThemePlate\Page\Interfaces\PageInterface::class, $page );
+		add_action(
+			'themeplate_page_' . $this->default['menu_slug'] . '_load',
+			static function ( string $hookname, array $loaded_config ) use ( &$config ): void {
+				$config = $loaded_config;
+			},
+			10,
+			2
+		);
+
+		$this->assertSame( $page, $page->position( 99 ) );
+		$page->load();
+
+		$this->assertSame( 99, $config['position'] );
+
+	}
+
 	/**
 	 * @param array<string, array<int, string>> $options
 	 * @dataProvider for_maybe_init_option
