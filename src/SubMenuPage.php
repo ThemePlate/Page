@@ -77,7 +77,9 @@ class SubMenuPage extends BasePage implements SubMenuPageInterface {
 			$config['position']
 		);
 
-		add_action( 'load-' . $this->hookname, array( $this, 'load' ) );
+		if ( '' !== $this->hookname ) {
+			add_action( 'load-' . $this->hookname, array( $this, 'load' ) );
+		}
 
 	}
 

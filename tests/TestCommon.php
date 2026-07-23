@@ -18,7 +18,7 @@ trait TestCommon {
 	 *     menu_title: string,
 	 *     menu_slug: string,
 	 *     position: int,
-	 *     config: array{}
+	 *     config: array{capability?: string}
 	 * }
 	 */
 	protected array $default = array(
@@ -48,14 +48,14 @@ trait TestCommon {
 
 		$parent_slug = '';
 
-		if ( $this->get_tested_instance( $this->default ) instanceof SubMenuPage ) {
+		if ( $this->get_tested_instance( $this->default ) instanceof \ThemePlate\Page\Interfaces\SubMenuPageInterface ) {
 			$parent_slug = $this->default['parent_slug'];
 		}
 
 		return array( compact( 'page_title', 'parent_slug', 'config' ), $option_group_name );
 	}
 
-	/** @return array<string, array<int, array{}|array<string, array{}>>> */
+	/** @return array<string, array<int, array<string, array<int, string>>>> */
 	public function for_maybe_init_option(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -71,7 +71,7 @@ trait TestCommon {
 			'with a list that already has our option name' => array(
 				array(
 					'random' => array(),
-					$this->default['menu_slug'] => array(),
+					$this->default['menu_slug'] => array( 'sentinel' ),
 				),
 			),
 		);

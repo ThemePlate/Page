@@ -19,4 +19,13 @@ class SubMenuPageTest extends AbstractTester {
 
 		new SubMenuPage( 'Test', 'parent' );
 	}
+
+	public function test_menu_does_not_register_load_hook_without_parent(): void {
+		$page = ( new SubMenuPage( 'Test' ) )->parent( 'missing-parent' );
+
+		$page->menu();
+
+		$this->assertSame( '', $page->get_hookname() );
+		$this->assertFalse( has_action( 'load-', array( $page, 'load' ) ) );
+	}
 }
