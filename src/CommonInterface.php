@@ -14,8 +14,8 @@ interface CommonInterface {
 	public function setup(): void;
 
 	/**
-	 * @param array<string, string|int> $options
-	 * @return array<string, string|int>
+	 * @param array<string, array<int, string>> $options
+	 * @return array<string, array<int, string>>
 	 */
 	public function maybe_init_option( array $options ): array;
 

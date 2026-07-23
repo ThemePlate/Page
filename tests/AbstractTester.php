@@ -12,6 +12,27 @@ use WP_UnitTestCase;
 abstract class AbstractTester extends WP_UnitTestCase {
 	use TestCommon;
 
+	/** @var array<string, mixed> */
+	protected array $request = array();
+
+
+	public function set_up(): void {
+
+		parent::set_up();
+
+		$this->request = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	}
+
+
+	public function tear_down(): void {
+
+		$_REQUEST = $this->request; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		parent::tear_down();
+
+	}
+
 	public function test_firing_setup_actually_add_hooks(): void {
 		$page = $this->get_tested_instance( $this->default );
 
@@ -21,14 +42,32 @@ abstract class AbstractTester extends WP_UnitTestCase {
 		$this->assertSame( 10, has_action( 'admin_menu', array( $page, 'menu' ) ) );
 	}
 
+	public function test_setup_matches_save_capability(): void {
+		$this->default['config']['capability'] = 'edit_posts';
+		$page                                  = $this->get_tested_instance( $this->default );
+
+		$page->setup();
+
+		$this->assertSame(
+			'edit_posts',
+			apply_filters( 'option_page_capability_' . $this->default['menu_slug'], 'manage_options' )
+		);
+	}
+
 	/**
-	 * @param array<string, int|string> $options
+	 * @param array<string, array<int, string>> $options
 	 * @dataProvider for_maybe_init_option
 	 */
 	public function test_maybe_init_option( array $options ): void {
 		$page = $this->get_tested_instance( $this->default );
 
-		$this->assertArrayHasKey( $this->default['menu_slug'], $page->maybe_init_option( $options ) );
+		$result = $page->maybe_init_option( $options );
+
+		$this->assertArrayHasKey( $this->default['menu_slug'], $result );
+
+		if ( array_key_exists( $this->default['menu_slug'], $options ) ) {
+			$this->assertSame( $options, $result );
+		}
 	}
 
 	/**

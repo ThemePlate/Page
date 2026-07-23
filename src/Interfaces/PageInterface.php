@@ -11,7 +11,16 @@ namespace ThemePlate\Page\Interfaces;
 
 interface PageInterface {
 
-	/** @param array<string, string|int> $config */
+	/**
+	 * @param array{
+	 *     capability?: string,
+	 *     menu_title?: string,
+	 *     menu_slug?: string,
+	 *     position?: int,
+	 *     icon_url?: string,
+	 *     parent_slug?: string,
+	 * } $config
+	 */
 	public function config( array $config ): self;
 
 	public function capability( string $capability ): self;

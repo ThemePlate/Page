@@ -38,8 +38,12 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 	/**
 	 * @param array{
+	 *     capability?: string,
 	 *     menu_title?: string,
 	 *     menu_slug?: string,
+	 *     position?: int,
+	 *     icon_url?: string,
+	 *     parent_slug?: string,
 	 * } $config
 	 */
 	protected function initialize( string $title, array $config ): void {
@@ -53,17 +57,23 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 	/**
 	 * @param array{
+	 *     capability?: string,
 	 *     menu_title?: string,
 	 *     menu_slug?: string,
+	 *     position?: int,
+	 *     icon_url?: string,
+	 *     parent_slug?: string,
 	 * } $config
 	 */
 	public function config( array $config ): self {
 
-		if ( empty( $config['menu_title'] ) ) {
+		$config = array_intersect_key( $config, $this->config );
+
+		if ( ! isset( $config['menu_title'] ) || '' === $config['menu_title'] ) {
 			$config['menu_title'] = $this->title;
 		}
 
-		if ( empty( $config['menu_slug'] ) ) {
+		if ( ! isset( $config['menu_slug'] ) || '' === $config['menu_slug'] ) {
 			$config['menu_slug'] = $config['menu_title'];
 		}
 
@@ -115,6 +125,12 @@ abstract class BasePage implements CommonInterface, PageInterface {
 	public function setup(): void {
 
 		add_filter( 'allowed_options', array( $this, 'maybe_init_option' ) );
+		add_filter(
+			'option_page_capability_' . $this->config['menu_slug'],
+			function (): string {
+				return $this->config['capability'];
+			}
+		);
 
 		if ( did_action( 'admin_menu' ) ) {
 			$this->menu();// @codeCoverageIgnore
@@ -126,8 +142,8 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 
 	/**
-	 * @param array<string, string|int> $options
-	 * @return array<string, string|int|array{}>
+	 * @param array<string, array<int, string>> $options
+	 * @return array<string, array<int, string>>
 	 */
 	public function maybe_init_option( array $options ): array {
 
