@@ -54,6 +54,38 @@ abstract class AbstractTester extends WP_UnitTestCase {
 		);
 	}
 
+
+	public function test_setup_does_not_duplicate_capability_filter(): void {
+
+		$page = $this->get_tested_instance( $this->default );
+
+		$page->setup();
+		$page->setup();
+
+		global $wp_filter;
+
+		$this->assertCount( 1, $wp_filter[ 'option_page_capability_' . $this->default['menu_slug'] ]->callbacks[10] );
+
+	}
+
+
+	public function test_create_uses_configured_capability_before_setup(): void {
+
+		$this->default['config']['capability'] = 'edit_posts';
+		$page                                  = $this->get_tested_instance( $this->default );
+		$user_id                               = self::factory()->user->create( array( 'role' => 'editor' ) );
+
+		$this->assertIsInt( $user_id );
+		wp_set_current_user( $user_id );
+		ob_start();
+		$page->create();
+		$output = ob_get_clean();
+
+		$this->assertIsString( $output );
+		$this->assertStringContainsString( 'id="submit"', $output );
+
+	}
+
 	/**
 	 * @param array<string, array<int, string>> $options
 	 * @dataProvider for_maybe_init_option

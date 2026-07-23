@@ -32,6 +32,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 		'parent_slug' => '',
 	);
 
+	protected bool $is_setup = false;
 	protected string $title;
 	protected string $hookname = '';
 
@@ -124,6 +125,12 @@ abstract class BasePage implements CommonInterface, PageInterface {
 
 	public function setup(): void {
 
+		if ( $this->is_setup ) {
+			return;
+		}
+
+		$this->is_setup = true;
+
 		add_filter( 'allowed_options', array( $this, 'maybe_init_option' ) );
 		add_filter(
 			'option_page_capability_' . $this->config['menu_slug'],
@@ -211,7 +218,7 @@ abstract class BasePage implements CommonInterface, PageInterface {
 								<div id="major-publishing-actions">
 									<?php settings_fields( $page ); ?>
 
-									<?php if ( current_user_can( apply_filters( 'option_page_capability_' . $page, 'manage_options' ) ) ) : ?>
+									<?php if ( current_user_can( apply_filters( 'option_page_capability_' . $page, $this->config['capability'] ) ) ) : ?>
 										<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
 									<?php else : ?>
 										<p><strong>Need a higher level access to save changes.</strong></p>
